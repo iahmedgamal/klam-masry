@@ -253,14 +253,14 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: #f0f0f0;
+  background-color: #3c1717;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
 }
 
 .pagination a:hover {
-  background-color: #ddd;
+  background-color: #532c2c;
 }
 
 .active a {
