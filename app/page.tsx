@@ -43,7 +43,7 @@ const Home = () => {
         {currentWords.map((item, index) => (
           <div key={index} className={styles.wordItem}>
             <h2>{item.word}</h2>
-            {/* <p>Appeared: {item.appeared}</p> */}
+            <p className={styles.appeared}>Appeared: {item.appeared}</p>
             {/* <p>Rank: {index +1 }</p> */}
 
           </div>
