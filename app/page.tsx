@@ -28,8 +28,8 @@ const Home = () => {
       .catch((error) => console.error('Error fetching the words:', error));
   }, []);
 
-  const handlePageChange = (selectedPage: number) => {
-    setCurrentPage(selectedPage);
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected);
   };
 
   const pageCount = Math.ceil(words.length / wordsPerPage);
@@ -44,7 +44,7 @@ const Home = () => {
           <div key={index} className={styles.wordItem}>
             <h2>{item.word}</h2>
             {/* <p>Appeared: {item.appeared}</p> */}
-            <p>Rank: {index +1 }</p>
+            {/* <p>Rank: {index +1 }</p> */}
 
           </div>
         ))}

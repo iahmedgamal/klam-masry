@@ -238,6 +238,37 @@
   background-color: #ddd;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  list-style: none;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+}
+
+.active a {
+  background-color: #0070f3;
+  border-color: #0070f3;
+  color: white;
+}
+
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {

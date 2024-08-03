@@ -1,11 +1,13 @@
 // src/components/Pagination.js
 import React from 'react';
 import ReactPaginate from 'react-paginate';
- 
+import styles from './page.module.css'; // Import custom styles
+
 
 interface PageProps {
   pageCount: number;
-  onPageChange: any;
+  onPageChange: (selectedPage: { selected: number }) => void;
+
 }
 const Pagination = ({ pageCount, onPageChange } : PageProps) => {
   return (
@@ -13,9 +15,10 @@ const Pagination = ({ pageCount, onPageChange } : PageProps) => {
     breakLabel="..."
     nextLabel="next >"
     onPageChange={onPageChange}
-    pageRangeDisplayed={5}
+    pageRangeDisplayed={2}
     pageCount={pageCount}
     previousLabel="< previous"
+    containerClassName={styles.pagination}
     renderOnZeroPageCount={null}
   />
   );
