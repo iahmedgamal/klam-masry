@@ -22,7 +22,7 @@ const Home = () => {
       })
       .then((data) => {
         // Convert object to array
-        const wordsArray = Object.values(data.words);
+        const wordsArray : { word: string; appeared: number }[] = Object.values(data.words);
         setWords(wordsArray);
       })
       .catch((error) => console.error('Error fetching the words:', error));
