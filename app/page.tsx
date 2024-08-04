@@ -1,18 +1,16 @@
-"use client"; // Marking this file as a Client Component
+"use client";
 
 import { useState, useEffect } from 'react';
 import styles from "./page.module.css";
 import Pagination from './Pagination';
 
-// Number of words per page
-const wordsPerPage = 20; // Adjust as needed (4 words per row, 5 rows per page)
+const wordsPerPage = 20;
 
 const Home = () => {
   const [words, setWords] = useState<{ word: string; appeared: number }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    // Fetch words from the JSON file
     fetch('./assets/words.json')
       .then((response) => {
         if (!response.ok) {
@@ -44,8 +42,6 @@ const Home = () => {
           <div key={index} className={styles.wordItem}>
             <h2>{item.word}</h2>
             <p className={styles.appeared}>Appeared: {item.appeared}</p>
-            {/* <p>Rank: {index +1 }</p> */}
-
           </div>
         ))}
       </div>

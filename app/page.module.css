@@ -5,6 +5,7 @@
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
+
 }
 
 .description {
@@ -44,6 +45,7 @@
   grid-template-columns: repeat(4, minmax(25%, auto));
   max-width: 100%;
   width: var(--max-width);
+  gap: 10px;
 }
 
 .card {
@@ -203,16 +205,6 @@
   }
 }
 
-.main {
-  padding: 20px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Adjust to 4 words per row */
-  gap: 10px;
-}
-
 .wordItem {
   padding: 10px;
   border: 1px solid #ddd;
@@ -220,10 +212,6 @@
   text-align: center;
 }
 
-.pagination {
-  margin-top: 20px;
-  text-align: center;
-}
 
 .pagination button {
   margin: 0 5px;
@@ -243,6 +231,8 @@
   justify-content: center;
   padding: 20px;
   list-style: none;
+  margin-top: 20px;
+  text-align: center;
 }
 
 .pagination li {
@@ -274,7 +264,6 @@
   font-size: 6px;
 }
 
-/* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {
     grid-template-columns: repeat(2, 50%);

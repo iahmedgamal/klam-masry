@@ -1,8 +1,6 @@
-// src/components/Pagination.js
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import styles from './page.module.css'; // Import custom styles
-
+import styles from './page.module.css'; 
 
 interface PageProps {
   pageCount: number;
