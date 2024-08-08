@@ -7,7 +7,7 @@ import Pagination from './Pagination';
 const wordsPerPage = 20;
 
 const Home = () => {
-  const [words, setWords] = useState<{ word: string; appeared: number }[]>([]);
+  const [words, setWords] = useState<{ word: string; appeared: number; en: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Home = () => {
       })
       .then((data) => {
         // Convert object to array
-        const wordsArray : { word: string; appeared: number }[] = Object.values(data.words);
+        const wordsArray : { word: string; appeared: number; en: string }[] = Object.values(data.words);
         setWords(wordsArray);
       })
       .catch((error) => console.error('Error fetching the words:', error));
@@ -40,7 +40,10 @@ const Home = () => {
       <div className={styles.grid}>
         {currentWords.map((item, index) => (
           <div key={index} className={styles.wordItem}>
-            <h2>{item.word}</h2>
+            <h2 className={styles.theWord}>{item.word}  </h2>
+            <br></br>
+            <h2>{item.en}</h2>
+            <br></br>
             <p className={styles.appeared}>Appeared: {item.appeared}</p>
           </div>
         ))}

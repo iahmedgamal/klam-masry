@@ -260,8 +260,11 @@
 }
 
 .appeared{
+  font-size: 4px;
+}
 
-  font-size: 6px;
+.theWord{
+  color: antiquewhite;
 }
 
 @media (min-width: 701px) and (max-width: 1120px) {
