@@ -19,29 +19,11 @@ const Home = () => {
         return response.json();
       })
       .then((data) => {
-        // Convert object to array
-        const wordsArray : { word: string; appeared: number; en: string }[] = Object.values(data.words);
+        const wordsArray : Word[] = data
         setWords(wordsArray);
       })
       .catch((error) => console.error('Error fetching the words:', error));
   }, []);
-
-
-  // useEffect(() => {
-  //   fetch('./assets/words.json')
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       // Convert object to array
-  //       const wordsArray : { word: string; appeared: number; en: string }[] = Object.values(data.words);
-  //       setWords(wordsArray);
-  //     })
-  //     .catch((error) => console.error('Error fetching the words:', error));
-  // }, []);
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
