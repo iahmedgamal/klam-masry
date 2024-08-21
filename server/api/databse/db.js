@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 dotenv.config();
 
 
-const uri = process.env.MONGODB_URI as string;
+const uri = process.env.MONGODB_URI
 
 const connectDB = async () => {
   try {
@@ -16,4 +16,4 @@ const connectDB = async () => {
   }
 };
 
-export default connectDB;
+module.exports = connectDB

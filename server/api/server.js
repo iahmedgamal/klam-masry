@@ -1,7 +1,8 @@
-import express, { Request, Response } from "express";
-import cors from "cors";
-import connectDB from "./databse/db";
-import WordModel from "./databse/word";
+const express = require("express");
+const cors = require("cors");
+const connectDB= require("./databse/db")
+const WordModel = require("./databse/word");
+
 const app = express();
 const PORT = 3000;
 
@@ -10,7 +11,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", async (req: Request, res: Response) => {
+app.get("/", async (req, res) => {
   try {
     const words = await WordModel.find();
     console.log("words",words);

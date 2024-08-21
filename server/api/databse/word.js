@@ -1,5 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+const mongoose = require("mongoose");
 
+const { Schema } = mongoose;
 const wordSchema = new Schema({
   word: String,
   appeared: Number,
@@ -10,4 +11,5 @@ const wordSchema = new Schema({
 const collection = "new_words";
 const WordModel = mongoose.model("Word", wordSchema, collection);
 
-export default WordModel;
+
+module.exports = WordModel
