@@ -4,7 +4,7 @@
   "description": "my server package to the next project kalam masry",
   "main": "src/server.ts",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "nodemon api/server.ts",
     "build": "tsc",
     "dev": "cross-env nodemon --watch 'src/server.ts' --exec './node_modules/.bin/ts-node src/server.ts'"
   },
