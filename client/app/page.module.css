@@ -267,6 +267,14 @@
   color: antiquewhite;
 }
 
+.slogn{
+  color: white;
+  font-size: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {
     grid-template-columns: repeat(2, 50%);

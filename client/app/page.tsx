@@ -37,9 +37,9 @@ const Home = () => {
   return (
     <main className={styles.main}>
       <h1 >Klam Masry</h1>
-      <p className="text-2xl">
+      <h3 className={styles.slogn}>
       Learn Egyptian Arabic by most used appearance words and sentances
-      </p>
+      </h3>
       <div className={styles.grid}>
         {currentWords.map((item, index) => (
           <div key={index} className={styles.wordItem}>
