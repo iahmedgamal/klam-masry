@@ -1,17 +1,17 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import Pagination from './Pagination';
-import {Word} from "@shared/types/words"
+import Pagination from "./Pagination";
+import { Word } from "@shared/types/words";
 const wordsPerPage = 20;
 
 const Home = () => {
   const [words, setWords] = useState<Word[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-
+  console.log(process.env.NEXT_PUBLIC_API);
   useEffect(() => {
-    fetch( process.env.NEXT_PUBLIC_API as string)
+    fetch(process.env.NEXT_PUBLIC_API as string)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -19,10 +19,10 @@ const Home = () => {
         return response.json();
       })
       .then((data) => {
-        const wordsArray : Word[] = data
+        const wordsArray: Word[] = data;
         setWords(wordsArray);
       })
-      .catch((error) => console.error('Error fetching the words:', error));
+      .catch((error) => console.error("Error fetching the words:", error));
   }, []);
 
   const handlePageChange = ({ selected }: { selected: number }) => {
@@ -36,14 +36,14 @@ const Home = () => {
 
   return (
     <main className={styles.main}>
-      <h1 >Klam Masry</h1>
+      <h1>Klam Masry</h1>
       <h3 className={styles.slogn}>
-      Learn Egyptian Arabic by most used appearance words and sentances
+        Learn Egyptian Arabic by most used appearance words and sentances
       </h3>
       <div className={styles.grid}>
         {currentWords.map((item, index) => (
           <div key={index} className={styles.wordItem}>
-            <h2 className={styles.theWord}>{item.word}  </h2>
+            <h2 className={styles.theWord}>{item.word} </h2>
             <br></br>
             <h2>{item.en}</h2>
             <br></br>
