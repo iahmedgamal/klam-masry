@@ -1,4 +1,5 @@
 export interface Word {
+  _id: number;
   word: string;
   appeared: number;
   en: string;
