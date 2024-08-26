@@ -212,26 +212,6 @@
   text-align: center;
 }
 
-
-.pagination button {
-  margin: 0 5px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f0f0f0;
-  cursor: pointer;
-}
-
-.pagination button:hover {
-  background-color: #ddd;
-}
-
-.active a {
-  background-color: #0070f3;
-  border-color: #0070f3;
-  color: white;
-}
-
 .appeared{
   font-size: 4px;
 }
@@ -240,13 +220,7 @@
   color: antiquewhite;
 }
 
-.slogn{
-  color: white;
-  font-size: 8px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-}
+
 
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {

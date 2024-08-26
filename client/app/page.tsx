@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import Pagination from "./components/Pagination";
+import Pagination from "./components/pagination/Pagination";
 import { Word } from "@shared/types/words";
+import Title from "./components/title/Title";
 const wordsPerPage = 16;
 
 const Home = () => {
@@ -36,10 +37,7 @@ const Home = () => {
 
   return (
     <main className={styles.main}>
-      <h1>Klam Masry</h1>
-      <h3 className={styles.slogn}>
-        Learn Egyptian Arabic by most used appearance words and sentances
-      </h3>
+      <Title/>
       <div className={styles.grid}>
         {currentWords.map((item, index) => (
           <div key={index} className={styles.wordItem}>
