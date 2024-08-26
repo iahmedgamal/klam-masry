@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  padding: 3rem;
   min-height: 100vh;
 
 }
@@ -224,33 +224,6 @@
 
 .pagination button:hover {
   background-color: #ddd;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  list-style: none;
-  margin-top: 20px;
-  text-align: center;
-}
-
-.pagination li {
-  margin: 0 5px;
-}
-
-.pagination a {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #3c1717;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-}
-
-.pagination a:hover {
-  background-color: #532c2c;
 }
 
 .active a {

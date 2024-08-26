@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import Pagination from "./Pagination";
+import Pagination from "./components/Pagination";
 import { Word } from "@shared/types/words";
 const wordsPerPage = 20;
 
