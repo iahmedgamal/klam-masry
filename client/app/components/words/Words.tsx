@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Word } from "@shared/types/words";
 import styles from "./words.module.css";
+import Link from "next/link";
 
 interface WordsProps {
   currentPage: number;
@@ -33,7 +34,9 @@ const Words = ({ currentPage, wordsPerPage }: WordsProps) => {
     <div className={styles.grid}>
       {currentWords.map((item, index) => (
         <div key={item._id} className={styles.wordItem}>
-          <h2 className={styles.theWord}>{item.word} </h2>
+          <Link href={`/word/${item._id}`} passHref>
+            <h2 className={styles.theWord}>{item.word} </h2>
+          </Link>
           <br></br>
           <h2>{item.en}</h2>
           <br></br>

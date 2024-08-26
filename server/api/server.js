@@ -21,6 +21,21 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/word/:id", async (req, res) => {
+  try {
+    const wordId = req.params.id; 
+    const word = await WordModel.findById(wordId); 
+
+    if (!word) {
+      return res.status(404).json({ message: "Word not found" }); 
+    }
+
+    res.json(word); 
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching the word", error }); 
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`);
 });
