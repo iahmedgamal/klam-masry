@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Word } from "@shared/types/words";
 import styles from "./words.module.css";
 import Link from "next/link";
+import Tooltip from "../tooltip/Tooltip";
 
 interface WordsProps {
   currentPage: number;
@@ -34,13 +35,14 @@ const Words = ({ currentPage, wordsPerPage }: WordsProps) => {
     <div className={styles.grid}>
       {currentWords.map((item, index) => (
         <div key={item._id} className={styles.wordItem}>
-          <Link href={`/word/${item._id}`} passHref>
-            <h2 className={styles.theWord}>{item.word} </h2>
-          </Link>
-          <br></br>
-          <h2>{item.en}</h2>
-          <br></br>
-          <p className={styles.appeared}>Appeared: {item.appeared}</p>
+          <Tooltip text={item.appeared}>
+            <Link href={`/word/${item._id}`} passHref>
+              <h2 className={styles.theWord}>{item.word} </h2>
+           
+            <br></br>
+            <h2>{item.en}</h2>
+            </Link>
+          </Tooltip>
         </div>
       ))}
     </div>
