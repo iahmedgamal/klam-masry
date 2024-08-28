@@ -4,6 +4,7 @@ import { useState } from "react";
 import Pagination from "./components/pagination/Pagination";
 import Title from "./components/title/Title";
 import Words from "./components/words/Words";
+import SearchBar from "./components/searchBar/SearchBar";
 const wordsPerPage = 16;
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
   return (
     <main className="flex flex-col justify-between items-center p-2 bg-gray-950 min-h-screen ">
       <Title/>
+      <SearchBar/>
       <Words currentPage={currentPage} wordsPerPage={wordsPerPage}/>
       <Pagination pageCount={pageCount} onPageChange={handlePageChange} />
     </main>

@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const connectDB= require("./databse/db")
+const connectDB = require("./databse/db")
 const WordModel = require("./databse/word");
 
 const app = express();
@@ -14,25 +14,46 @@ app.use(express.json());
 app.get("/", async (req, res) => {
   try {
     const words = await WordModel.find();
-    console.log("words",words);
+    console.log("words", words);
     res.json(words);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching words", error});
+    res.status(500).json({ message: "Error fetching words", error });
   }
 });
 
 app.get("/word/:id", async (req, res) => {
   try {
-    const wordId = req.params.id; 
-    const word = await WordModel.findById(wordId); 
+    const wordId = req.params.id;
+    const word = await WordModel.findById(wordId);
 
     if (!word) {
-      return res.status(404).json({ message: "Word not found" }); 
+      return res.status(404).json({ message: "Word not found" });
     }
 
-    res.json(word); 
+    res.json(word);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching the word", error }); 
+    res.status(500).json({ message: "Error fetching the word", error });
+  }
+});
+
+app.get("/api/search", async (req, res) => {
+  try {
+    const { query } = req.query
+
+    if (!query) {
+      return res.status(400).json({ message: "Query parameter is missing" });
+    }
+
+    const searchWordsResuts = await WordModel.find({
+      $or: [
+        {
+          en: { $regex: query, $options: "i" }
+        }
+      ]
+    }).limit(10);
+    res.json(searchWordsResuts);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching search related", error });
   }
 });
 
