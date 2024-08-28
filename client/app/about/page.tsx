@@ -12,7 +12,7 @@ export default function About() {
         <p className="mb-3  text-center align-text-bottom text-wrap">
           Hello,
 
-          I'm happy to see you here discovering this site, why this is important?
+          Why this is important?
           This is a platform for you to learn Egyptian language with the most appeared words and sentances
         </p>
 
