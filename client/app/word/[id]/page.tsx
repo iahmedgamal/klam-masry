@@ -1,5 +1,3 @@
-"use client";
-import { useEffect, useState } from "react";
 import { Word } from "@shared/types/words";
 
 interface WordDetailsProps {
@@ -8,27 +6,16 @@ interface WordDetailsProps {
   };
 }
 
-const WordDetails = ({ params }: WordDetailsProps) => {
+const WordDetails = async ({ params }: WordDetailsProps) => {
   const { id } = params;
-  const [word, setWord] = useState<Word | null>(null);
 
-  useEffect(() => {
-    if (id) {
-      fetch(`${process.env.NEXT_PUBLIC_API}word/${id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setWord(data);
-        })
-        .catch((error) => console.error("Error fetching the word details:", error));
-    }
-  }, [id]);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}word/${id}`);
 
-  if (!word) return <p>Loading...</p>;
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  const word: Word = await response.json();
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-gray-950 text-cyan-300">
