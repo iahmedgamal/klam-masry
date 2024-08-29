@@ -1,4 +1,6 @@
 
+"use client";
+
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { Word } from "@shared/types/words";
 

@@ -1,3 +1,5 @@
+// app/word/[id]/page.tsx
+
 import { Word } from "@shared/types/words";
 
 interface WordDetailsProps {
@@ -9,7 +11,10 @@ interface WordDetailsProps {
 const WordDetails = async ({ params }: WordDetailsProps) => {
   const { id } = params;
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API}word/${id}`);
+  // Fetch data on the server side
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}word/${id}`, {
+    cache: 'no-store' // Ensure fresh data every time
+  });
 
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);

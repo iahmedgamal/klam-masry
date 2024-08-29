@@ -7,6 +7,7 @@ import Words from "./components/words/Words";
 import SearchBar from "./components/searchBar/SearchBar";
 import Link from "next/link";
 import { WordsProvider } from "./context/wordsContext";
+import Random from "./components/random/Random";
 const wordsPerPage = 16;
 
 const Home = () => {
@@ -24,7 +25,7 @@ const Home = () => {
       <WordsProvider>
         <Title />
         <SearchBar />
-        <Link className="text-cyan-400 mt-4" href={"random"}>Random</Link>
+        <Random/>
         <Words currentPage={currentPage} wordsPerPage={wordsPerPage} />
         <Pagination pageCount={pageCount} onPageChange={handlePageChange} />
       </WordsProvider>
