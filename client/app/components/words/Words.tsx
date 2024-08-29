@@ -31,8 +31,8 @@ const Words = ({ currentPage, wordsPerPage }: WordsProps) => {
 
   return (
     <div className="grid  grid-cols-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 pt-20 ">
-      {words.length === 0 && <div>Loading...</div>}
-      {currentWords.map((item, index) => (
+      {words.length === 0 && (<><div></div><div className="text-cyan-200 text-3xl">Loading...</div> </>)}
+      {currentWords.map((item) => (
         <div key={item._id} className="p-1 w-24 border-spacing-4 border-2 border-cyan-100 text-center text-cyan-200">
           <Tooltip text={item.appeared}>
             <Link href={`/word/${item._id}`} passHref>
