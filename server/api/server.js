@@ -57,6 +57,26 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
+
+app.delete("/word/:id", async (req, res) => { 
+  const wordId = req.params.id
+  await WordModel.findByIdAndDelete(wordId).then((word) => {
+    res.json({ message: "Word deleted successfully", word })
+  }).catch((error) => {
+    res.status(500).json({ message: "Error deleting the word", error })
+  })
+})
+
+app.put("/word/:id", async (req, res) => {
+  const wordId = req.params.id
+  const updatedWord = req.body
+  await WordModel.findByIdAndUpdate(wordId, updatedWord).then((word) => {
+    res.json({ message: "Word updated successfully", word })
+  }).catch((error) => {
+    res.status(500).json({ message: "Error updating the word", error })
+  })
+})
+
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`);
 });
