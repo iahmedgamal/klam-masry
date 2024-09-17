@@ -14,7 +14,7 @@ function Admin() {
   const fetchWords = async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}`, {
-        cache: 'force-cache'
+        cache: 'no-store'
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -30,12 +30,12 @@ function Admin() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}word/${id}`, {
         method: 'DELETE',
-        cache: 'force-cache'
+        cache: 'no-store'
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      fetchWords();
+      await fetchWords();
       setNotification('Word deleted successfully');
       setTimeout(() => setNotification(null), 3000);
     } catch (error) {
@@ -51,15 +51,19 @@ function Admin() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedWord),
-        cache: 'force-cache'
+        cache: 'no-store'
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       setEditWord(null);
-      fetchWords();
+      await fetchWords();
+      setNotification('Word updated successfully');
+      setTimeout(() => setNotification(null), 3000);
     } catch (error) {
       console.error('Error updating word:', error);
+      setNotification('Error updating word');
+      setTimeout(() => setNotification(null), 3000);
     }
   };
 
@@ -77,7 +81,6 @@ function Admin() {
             <th className='p-2 border'>Number</th>
             <th className='p-2 border'>ID</th>
             <th className='p-2 border'>Appeared</th>
-
             <th className='p-2 border'>Word</th>
             <th className='p-2 border'>English</th>
             <th className='p-2 border'>Actions</th>
@@ -86,7 +89,7 @@ function Admin() {
         <tbody>
           {words.map((word: Word, index: number) => (
             <tr key={word._id}>
-              <td className='p-2 border'>{index}</td>
+              <td className='p-2 border'>{index + 1}</td>
               <td className='p-2 border'>{word._id}</td>
               <td className='p-2 border'>{word.appeared}</td>
               <td className='p-2 border'>{word.word}</td>
@@ -108,33 +111,42 @@ function Admin() {
         </tbody>
       </table>
       {editWord && (
-        <div className='mt-4'>
-          <h2 className='mb-2 text-xl'>Edit Word</h2>
-          <input
-            type='text'
-            value={editWord.word}
-            onChange={(e) => setEditWord({ ...editWord, word: e.target.value })}
-            className='p-1 mr-2 border'
-          />
-          <input
-            type='number'
-            value={editWord.appeared}
-            onChange={(e) =>
-              setEditWord({ ...editWord, appeared: parseInt(e.target.value) })
-            }
-            className='p-1 mr-2 border'
-          />
-          <input
-            type='text'
-            value={editWord.en}
-            onChange={(e) => setEditWord({ ...editWord, en: e.target.value })}
-            className='p-1 mr-2 border'
-          />
-          <button
-            onClick={() => updateWord(editWord._id, editWord)}
-            className='px-2 py-1 text-white bg-green-500 rounded'>
-            Save
-          </button>
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
+          <div className='p-4 bg-white rounded-lg'>
+            <h2 className='mb-2 text-xl'>Edit Word</h2>
+            <input
+              type='text'
+              value={editWord.word}
+              onChange={(e) => setEditWord({ ...editWord, word: e.target.value })}
+              className='p-1 mb-2 mr-2 border'
+            />
+            <input
+              type='number'
+              value={editWord.appeared}
+              onChange={(e) =>
+                setEditWord({ ...editWord, appeared: parseInt(e.target.value) })
+              }
+              className='p-1 mb-2 mr-2 border'
+            />
+            <input
+              type='text'
+              value={editWord.en}
+              onChange={(e) => setEditWord({ ...editWord, en: e.target.value })}
+              className='p-1 mb-2 mr-2 border'
+            />
+            <div>
+              <button
+                onClick={() => updateWord(editWord._id, editWord)}
+                className='px-2 py-1 mr-2 text-white bg-green-500 rounded'>
+                Save
+              </button>
+              <button
+                onClick={() => setEditWord(null)}
+                className='px-2 py-1 text-white bg-red-500 rounded'>
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
