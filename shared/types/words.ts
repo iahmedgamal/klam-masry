@@ -3,6 +3,7 @@ export interface Word {
   word: string;
   appeared: number;
   en: string;
+  franco: string;
 }
 
 export interface WordsResponse {
