@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const connectDB = require("./databse/db")
+const connectDB = require("./databse/db");
 const WordModel = require("./databse/word");
+const NodeCache = require("node-cache");
+const cache = new NodeCache({ stdTTL: 3600 });
 
 const app = express();
 const PORT = 3000;
@@ -12,9 +14,16 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", async (req, res) => {
+  const cacheKey = req.originalUrl;
+  const cacheValue = cache.get(cacheKey);
+
+  if (cacheValue) {
+    return res.json(cacheValue);
+  }
+
   try {
     const words = await WordModel.find();
-    console.log("words", words);
+    cache.set(cacheKey, words);
     res.json(words);
   } catch (error) {
     res.status(500).json({ message: "Error fetching words", error });
@@ -38,7 +47,7 @@ app.get("/word/:id", async (req, res) => {
 
 app.get("/api/search", async (req, res) => {
   try {
-    const { query } = req.query
+    const { query } = req.query;
 
     if (!query) {
       return res.status(400).json({ message: "Query parameter is missing" });
@@ -47,9 +56,9 @@ app.get("/api/search", async (req, res) => {
     const searchWordsResuts = await WordModel.find({
       $or: [
         {
-          en: { $regex: query, $options: "i" }
-        }
-      ]
+          en: { $regex: query, $options: "i" },
+        },
+      ],
     }).limit(10);
     res.json(searchWordsResuts);
   } catch (error) {
@@ -57,25 +66,28 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
-
-app.delete("/word/:id", async (req, res) => { 
-  const wordId = req.params.id
-  await WordModel.findByIdAndDelete(wordId).then((word) => {
-    res.json({ message: "Word deleted successfully", word })
-  }).catch((error) => {
-    res.status(500).json({ message: "Error deleting the word", error })
-  })
-})
+app.delete("/word/:id", async (req, res) => {
+  const wordId = req.params.id;
+  await WordModel.findByIdAndDelete(wordId)
+    .then((word) => {
+      res.json({ message: "Word deleted successfully", word });
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Error deleting the word", error });
+    });
+});
 
 app.put("/word/:id", async (req, res) => {
-  const wordId = req.params.id
-  const updatedWord = req.body
-  await WordModel.findByIdAndUpdate(wordId, updatedWord).then((word) => {
-    res.json({ message: "Word updated successfully", word })
-  }).catch((error) => {
-    res.status(500).json({ message: "Error updating the word", error })
-  })
-})
+  const wordId = req.params.id;
+  const updatedWord = req.body;
+  await WordModel.findByIdAndUpdate(wordId, updatedWord)
+    .then((word) => {
+      res.json({ message: "Word updated successfully", word });
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Error updating the word", error });
+    });
+});
 
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`);
