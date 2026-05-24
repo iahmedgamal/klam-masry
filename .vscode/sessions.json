@@ -1,0 +1,75 @@
+{
+  "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v11/terminal-keeper.json",
+  "theme": "tribe",
+  "active": "default",
+  "activateOnStartup": true,
+  "keepExistingTerminals": false,
+  "sessions": {
+    "default": [
+      {
+        "name": "Claude Code",
+        "autoExecuteCommands": true,
+        "icon": "claude",
+        "color": "terminal.ansiYellow",
+        "commands": [
+          "claude"
+        ]
+      },
+      {
+        "name": "OpenCode",
+        "autoExecuteCommands": true,
+        "icon": "tools",
+        "color": "terminal.ansiYellow",
+        "commands": [
+          "opencode"
+        ]
+      },
+      {
+        "name": "Gemma 4 31B Cloud",
+        "autoExecuteCommands": true,
+        "icon": "hubot",
+        "color": "terminal.ansiGreen",
+        "commands": [
+          "ollama launch claude --model gemma4:31b-cloud"
+        ]
+      },
+      [
+        {
+          "name": "start frontend",
+          "autoExecuteCommands": true,
+          "icon": "server",
+          "color": "terminal.ansiBlue",
+          "commands": [
+            "cd client && npm run dev"
+          ]
+        },
+        {
+          "name": "start backend",
+          "autoExecuteCommands": true,
+          "icon": "server",
+          "color": "terminal.ansiBlue",
+          "commands": [
+            "cd server && npm run dev"
+          ]
+        }
+      ],
+      {
+        "name": "git",
+        "autoExecuteCommands": true,
+        "icon": "source-control",
+        "color": "terminal.ansiBlack",
+        "commands": [
+          "git status"
+        ]
+      }
+    ],
+    "saved-session": [
+      {
+        "name": "connect",
+        "commands": [
+          ""
+        ]
+      }
+    ]
+  }
+}
