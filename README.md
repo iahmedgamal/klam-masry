@@ -10,7 +10,7 @@ Back in 2020, I was watching a YouTube video about building a Twitter API. I tho
 
 At some point, I started saving all the tweets coming from the region. A year later, my database hit its max size — 1 GB of Egyptian text. I thought, "What the heck do I do with all this data?"
 
-That's when it clicked. I built a Wordle-style game using Egyptian words (play it [here](https://tarbana.vercel.app/)). Then I created this project to showcase the most common Egyptian Arabic words — 3,000 of them, sorted by how often they appear in real conversations so you learn the most relevant stuff first.
+That's when it clicked. I built a Wordle-style game using Egyptian words (play it [here](https://tarbana.shankout.dev)). Then I created this project to showcase the most common Egyptian Arabic words — 3,000 of them, sorted by how often they appear in real conversations so you learn the most relevant stuff first.
 
 A version focused on common phrases is coming soon.
 
