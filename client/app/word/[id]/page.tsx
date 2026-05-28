@@ -39,56 +39,32 @@ const WordDetails = async ({ params }: WordDetailsProps) => {
   const word: Word = await response.json();
 
   return (
-    <main
-      className="flex flex-col items-center justify-center min-h-screen px-6"
-      style={{ background: "#0b0806" }}
-    >
+    <main className="flex flex-col items-center justify-center min-h-screen px-6 bg-sand-bg">
       <a
         href="/"
-        className="absolute top-6 left-6 text-xs tracking-widest uppercase transition-colors duration-200 text-[#3a2c18] hover:text-[#c9933a]"
-        style={{ fontFamily: "var(--font-mono), monospace", letterSpacing: "0.2em" }}
+        className="absolute top-6 left-6 text-xs tracking-widest2 uppercase font-mono-custom text-gold-dim hover:text-gold transition-colors duration-200"
       >
         ← back
       </a>
 
       <div className="page-enter text-center max-w-lg w-full">
-        <div
-          className="mb-8 pb-8"
-          style={{ borderBottom: "1px solid #2a2018" }}
-        >
+        <div className="mb-8 pb-8 border-b border-sand-border">
           <p
-            className="text-8xl sm:text-9xl font-light leading-none mb-4"
+            className="text-8xl sm:text-9xl font-light leading-none mb-4 text-gold-light"
             dir="rtl"
-            style={{ color: "#e8c87a" }}
           >
             {word.word}
           </p>
-          <p
-            className="text-xl tracking-widest"
-            style={{
-              color: "#4a3a28",
-              fontFamily: "var(--font-mono), monospace",
-            }}
-          >
+          <p className="text-xl tracking-widest font-mono-custom text-gold-muted">
             {word.franco}
           </p>
         </div>
 
-        <p
-          className="text-4xl sm:text-5xl font-medium mb-8 tracking-wide"
-          style={{ color: "#c9b090" }}
-        >
+        <p className="text-4xl sm:text-5xl font-medium mb-8 tracking-wide text-cream-bright">
           {word.en}
         </p>
 
-        <p
-          className="text-xs tracking-widest uppercase"
-          style={{
-            color: "#2a2018",
-            fontFamily: "var(--font-mono), monospace",
-            letterSpacing: "0.25em",
-          }}
-        >
+        <p className="text-xs tracking-widest3 uppercase font-mono-custom text-sand-border">
           appeared {word.appeared}× in corpus
         </p>
       </div>

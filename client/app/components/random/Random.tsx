@@ -15,14 +15,7 @@ const Random = () => {
     <div className="mt-4">
       <a
         href={`/word/${randomWordId}`}
-        className="text-xs tracking-widest uppercase transition-colors duration-200 font-mono-custom"
-        style={{ color: "#4a3a28", letterSpacing: "0.2em" }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLAnchorElement).style.color = "#c9933a";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLAnchorElement).style.color = "#4a3a28";
-        }}
+        className="text-xs tracking-widest2 uppercase font-mono-custom text-gold-muted hover:text-gold transition-colors duration-200"
       >
         ↝ random word
       </a>
