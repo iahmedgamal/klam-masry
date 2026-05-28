@@ -1,26 +1,31 @@
 "use client";
 
-import React from 'react';
-import { useWords } from '@/app/context/wordsContext';
-import { Word } from '../../../../shared/types/words';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import { useWords } from "@/app/context/wordsContext";
+import { Word } from "../../../../shared/types/words";
 
 const Random = () => {
   const { words, isLoading } = useWords();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading || words.length === 0) return null;
 
-  const randomWordId = words.length > 0 ? getRandomWord(words) : null;
+  const randomWordId = getRandomWord(words);
 
   return (
-    <div className='text-cyan-400 mt-4'>
-      {randomWordId ? (
-        <a href={`/word/${randomWordId}`} >Give me a random word to learn</a>
-      ) : (
-        <div>No words available</div>
-      )}
+    <div className="mt-4">
+      <a
+        href={`/word/${randomWordId}`}
+        className="text-xs tracking-widest uppercase transition-colors duration-200 font-mono-custom"
+        style={{ color: "#4a3a28", letterSpacing: "0.2em" }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLAnchorElement).style.color = "#c9933a";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLAnchorElement).style.color = "#4a3a28";
+        }}
+      >
+        ↝ random word
+      </a>
     </div>
   );
 };

@@ -31,7 +31,7 @@ cd klam-misr
 
 ```bash
 # .env
-MONGO_URI=your-mongo-uri
+MONGODB_URI=your-mongo-uri
 
 npm install && npm run dev
 ```

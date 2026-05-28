@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0b0806;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #4a3418;
+    border-radius: 2px;
+  }
+
+  body {
+    font-family: var(--font-display), 'Georgia', serif;
+    background-color: #0b0806;
+  }
+}
+
+@layer utilities {
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card-enter {
+    animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+
+  .page-enter {
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .dropdown-enter {
+    animation: slideDown 0.2s ease both;
+  }
+
+  .font-mono-custom {
+    font-family: var(--font-mono), 'Courier New', monospace;
+  }
+}

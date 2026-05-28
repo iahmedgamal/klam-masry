@@ -5,6 +5,8 @@ const WordModel = require("./databse/word");
 const NodeCache = require("node-cache");
 const cache = new NodeCache({ stdTTL: 3600 });
 
+const wordsPerPage = 30;
+
 const app = express();
 const PORT = 3000;
 
@@ -16,13 +18,18 @@ app.use(express.json());
 app.get("/", async (req, res) => {
   const cacheKey = req.originalUrl;
   const cacheValue = cache.get(cacheKey);
-
   if (cacheValue) {
     return res.json(cacheValue);
   }
 
+   const page = req.query.page || 1;
+
   try {
-    const words = await WordModel.find();
+    const words = await WordModel.find()
+    .sort({ appeared: -1 })
+    .skip((page -1) * wordsPerPage)
+    .limit(wordsPerPage)
+
     cache.set(cacheKey, words);
     res.json(words);
   } catch (error) {

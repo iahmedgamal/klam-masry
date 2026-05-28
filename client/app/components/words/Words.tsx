@@ -1,43 +1,58 @@
 import React from "react";
 import Link from "next/link";
-import Tooltip from "../tooltip/Tooltip";
-import { useWords } from "@/app/context/wordsContext";
+import { Word } from "@shared/types/words";
 
 interface WordsProps {
-  currentPage: number;
-  wordsPerPage: number;
+  words: Word[];
 }
-const Words = ({ currentPage, wordsPerPage }: WordsProps) => {
-  const {words, isLoading} =  useWords();
 
-  const startIndex = currentPage * wordsPerPage;
-  const endIndex = startIndex + wordsPerPage;
-  const currentWords = words.slice(startIndex, endIndex);
-
+const Words = ({ words }: WordsProps) => {
   return (
-    <div className='grid grid-cols-2 gap-4 pt-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-      {isLoading && (
-        <div className='text-center col-span-full'>
-          <div className='text-3xl text-cyan-200'>Loading...</div>
-        </div>
-      )}
-      {currentWords.map((item) => (
+    <div className="grid grid-cols-2 gap-3 pt-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full max-w-5xl px-4">
+      {words.map((item, index) => (
         <div
           key={item._id}
-          className='p-4 text-center transition-colors duration-300 border-2 rounded-lg border-cyan-100 text-cyan-200 hover:bg-cyan-900'>
-          <Tooltip text={item.appeared}>
-            <Link href={`/word/${item._id}`} passHref className='block'>
-              <h2 className='mb-2 text-2xl font-bold text-right sm:text-3xl text-cyan-50'>
+          className="card-enter"
+          style={{ "--i": index % 30 } as React.CSSProperties}
+        >
+          <Link href={`/word/${item._id}`} className="block h-full group">
+            <div
+              className="h-full p-4 transition-all duration-300 border rounded"
+              style={{ background: "#111009", borderColor: "#2a2018" }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLDivElement).style.borderColor = "#6a4e28";
+                (e.currentTarget as HTMLDivElement).style.background = "#161209";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLDivElement).style.borderColor = "#2a2018";
+                (e.currentTarget as HTMLDivElement).style.background = "#111009";
+              }}
+            >
+              <h2
+                className="text-2xl sm:text-3xl font-medium text-right mb-1 leading-tight"
+                dir="rtl"
+                style={{ color: "#e8c87a" }}
+              >
                 {item.word}
               </h2>
-              <p className='mb-2 text-lg italic text-right sm:text-xl text-cyan-300'>
+              <p
+                className="text-xs text-right mb-3 font-mono-custom tracking-wide"
+                style={{ color: "#6a5a40" }}
+              >
                 {item.franco}
               </p>
-              <p className='text-sm text-left sm:text-base text-cyan-200'>
+              <div style={{ height: "1px", background: "#2a2018" }} className="mb-3" />
+              <p className="text-lg sm:text-xl font-medium tracking-wide" style={{ color: "#ede3cd" }}>
                 {item.en}
               </p>
-            </Link>
-          </Tooltip>
+              <p
+                className="text-xs mt-3 font-mono-custom opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ color: "#4a3a28" }}
+              >
+                ×{item.appeared}
+              </p>
+            </div>
+          </Link>
         </div>
       ))}
     </div>

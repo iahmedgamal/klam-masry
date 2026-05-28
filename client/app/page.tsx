@@ -1,36 +1,73 @@
 "use client";
 
-import { useState } from "react";
-import Pagination from "./components/pagination/Pagination";
+import { Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Title from "./components/title/Title";
 import Words from "./components/words/Words";
 import SearchBar from "./components/searchBar/SearchBar";
 import { useWords, WordsProvider } from "./context/wordsContext";
 import Random from "./components/random/Random";
 import Footer from "./components/footer/Footer";
-const wordsPerPage = 16;
+import LoadMore from "./components/loadMore/LoadMore";
 
-const Home = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const { words } = useWords();
+function HomeContent() {
+  const router = useRouter();
+  const { words, isLoading, isLoadingMore, hasMore, currentPage, loadMore } = useWords();
 
-  const handlePageChange = ({ selected }: { selected: number }) => {
-    setCurrentPage(selected);
+  const handleLoadMore = () => {
+    loadMore();
+    router.push(`?page=${currentPage + 1}`, { scroll: false });
   };
 
-  // TODO: Calculate the total number of pages
-  const pageCount = Math.ceil(words.length / wordsPerPage);
+  return (
+    <>
+      <Title />
+      <SearchBar />
+      <Random />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-32">
+          <p
+            className="text-lg tracking-widest uppercase animate-pulse font-mono-custom"
+            style={{ color: "#3a2c18", letterSpacing: "0.3em" }}
+          >
+            Loading
+          </p>
+        </div>
+      ) : (
+        <>
+          <Words words={words} />
+          <LoadMore
+            onLoadMore={handleLoadMore}
+            isLoadingMore={isLoadingMore}
+            hasMore={hasMore}
+          />
+        </>
+      )}
+      <Footer />
+    </>
+  );
+}
+
+function HomeWithProvider() {
+  const searchParams = useSearchParams();
+  const initialPage = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
 
   return (
-    <main className="flex flex-col items-center justify-between min-h-screen p-2 bg-gray-950 ">
-      <WordsProvider>
-        <Title />
-        <SearchBar />
-        <Random/>
-        <Words currentPage={currentPage} wordsPerPage={wordsPerPage} />
-        <Pagination pageCount={pageCount} onPageChange={handlePageChange} />
-        <Footer/>
-      </WordsProvider>
+    <WordsProvider initialPage={initialPage}>
+      <HomeContent />
+    </WordsProvider>
+  );
+}
+
+const Home = () => {
+  return (
+    <main
+      className="flex flex-col items-center min-h-screen"
+      style={{ background: "#0b0806" }}
+    >
+      <Suspense>
+        <HomeWithProvider />
+      </Suspense>
     </main>
   );
 };
