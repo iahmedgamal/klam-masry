@@ -1,101 +1,36 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./databse/db");
-const WordModel = require("./databse/word");
-const NodeCache = require("node-cache");
-const cache = new NodeCache({ stdTTL: 3600 });
+const { generalLimiter } = require("./middleware/rateLimiter");
+const wordRoutes = require("./routes/words");
+const searchRoutes = require("./routes/search");
 
-const wordsPerPage = 30;
-
-const app = express();
 const PORT = 3000;
+const app = express();
 
 connectDB();
 
 app.use(cors());
 app.use(express.json());
+app.use(generalLimiter);
 
-app.get("/", async (req, res) => {
-  const cacheKey = req.originalUrl;
-  const cacheValue = cache.get(cacheKey);
-  if (cacheValue) {
-    return res.json(cacheValue);
-  }
+app.use("/", wordRoutes);
+app.use("/api", searchRoutes);
 
-   const page = req.query.page || 1;
-
-  try {
-    const words = await WordModel.find()
-    .sort({ appeared: -1 })
-    .skip((page -1) * wordsPerPage)
-    .limit(wordsPerPage)
-
-    cache.set(cacheKey, words);
-    res.json(words);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching words", error });
-  }
-});
-
-app.get("/word/:id", async (req, res) => {
-  try {
-    const wordId = req.params.id;
-    const word = await WordModel.findById(wordId);
-
-    if (!word) {
-      return res.status(404).json({ message: "Word not found" });
-    }
-
-    res.json(word);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching the word", error });
-  }
-});
-
-app.get("/api/search", async (req, res) => {
-  try {
-    const { query } = req.query;
-
-    if (!query) {
-      return res.status(400).json({ message: "Query parameter is missing" });
-    }
-
-    const searchWordsResuts = await WordModel.find({
-      $or: [
-        {
-          en: { $regex: query, $options: "i" },
-        },
-      ],
-    }).limit(10);
-    res.json(searchWordsResuts);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching search related", error });
-  }
-});
-
-app.delete("/word/:id", async (req, res) => {
-  const wordId = req.params.id;
-  await WordModel.findByIdAndDelete(wordId)
-    .then((word) => {
-      res.json({ message: "Word deleted successfully", word });
-    })
-    .catch((error) => {
-      res.status(500).json({ message: "Error deleting the word", error });
-    });
-});
-
-app.put("/word/:id", async (req, res) => {
-  const wordId = req.params.id;
-  const updatedWord = req.body;
-  await WordModel.findByIdAndUpdate(wordId, updatedWord)
-    .then((word) => {
-      res.json({ message: "Word updated successfully", word });
-    })
-    .catch((error) => {
-      res.status(500).json({ message: "Error updating the word", error });
-    });
-});
-
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`);
 });
+
+server.keepAliveTimeout = 0;
+
+function shutdown(signal) {
+  server.closeAllConnections();
+  server.close(() => {
+    if (signal === "SIGUSR2") process.kill(process.pid, "SIGUSR2");
+    else process.exit(0);
+  });
+}
+
+process.once("SIGUSR2", () => shutdown("SIGUSR2"));
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
